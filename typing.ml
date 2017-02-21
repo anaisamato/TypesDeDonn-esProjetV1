@@ -18,6 +18,7 @@ let tp_prog (Prog (gvds, fdfs)) =
        [Fundefn (Fundecl (BoolT, "even", [Vardecl (IntT, "n")]), [], Skip)])
 ;;
 
+(* Exercice 1 -> TP_EXPR *)
 (* retrieve the type of vname in the environment*)
 let retrieve_type x = function env ->
     let rec retrieve_type_aux x = function 
@@ -42,6 +43,9 @@ let retrieve_var = function
 let rec retrieve_val env = function
 	Const(_, v) -> verifConst v
 	|VarE (_, v) -> retrieve_type(retrieve_var v) env
+	|IfThenElse(a, vIf, vThen, vElse) -> let valIf = retrieve_val env vIf in let valThen = retrieve_val env vThen in let valElse = retrieve_val env vElse in 
+											if valIf = BoolT && valThen = BoolT && valElse = BoolT then BoolT else
+												if valIf = BoolT && valThen = IntT && valElse = IntT then IntT else failwith "error"
 	|BinOp(a, binop, exp1, exp2) -> match binop with
 									BArith x -> let val1 = retrieve_val env exp1 in let val2 = retrieve_val env exp2 in 
 										if val1=IntT && val2=IntT then IntT else failwith"error"
@@ -66,5 +70,6 @@ let rec retrieve_binop env = function
 let rec tp_expr env = function
 	Const(0, v) -> Const(verifConst v, v)
 	|VarE (0,v)-> VarE((retrieve_type(retrieve_var v) env), v)
-	|BinOp (0, binop, exp1, exp2)-> BinOp(retrieve_binop env (binop, exp1,exp2), binop, tp_expr env exp1, tp_expr env exp2);;
+	|BinOp (0, binop, exp1, exp2)-> BinOp(retrieve_binop env (binop, exp1,exp2), binop, tp_expr env exp1, tp_expr env exp2)
+	|IfThenElse(0, vIf, vThen, vElse) -> IfThenElse(retrieve_val env(IfThenElse(0,vIf, vThen, vElse)), tp_expr env vIf, tp_expr env vThen, tp_expr env vElse);;
 (* val tp_expr : environment -> int expr -> tp expr = <fun> *)
