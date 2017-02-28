@@ -20,3 +20,8 @@ let gen_prog (Prog (gvds, fdfs)) =
                       Methinfo (3, 1),
                       [Loadc (IntT, IntV 0); ReturnI IntT])])
 
+(* find the position of x in a list *)
+let rec position x = function
+  	[] -> failwith"Not in the list"
+  	|a::q -> if a=x then 0 else 1+position x q;;
+(*  val position : 'a -> 'a list -> int = <fun> *)
