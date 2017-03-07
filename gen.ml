@@ -1,9 +1,9 @@
 (* Compilation functions *)
 
-open Lang
-open Analyses
-open Instrs
-
+open Lang;;
+open Analyses;;
+open Instrs;;
+open Print_instr;;
 (* ************************************************************ *)
 (* **** Compilation of expressions / statements            **** *)
 (* ************************************************************ *)
@@ -25,3 +25,16 @@ let rec position x = function
   	[] -> failwith"Not in the list"
   	|a::q -> if a=x then 0 else 1+position x q;;
 (*  val position : 'a -> 'a list -> int = <fun> *)
+
+(* take a Var and return it value *)
+let varAux = function
+  Var(_, a) -> a;;
+(* *)
+
+(* generate bytecode *)
+let gen_exp liste = function
+   Const(t, v)-> [Loadc (t ,v)]
+  |VarE (t,v)  -> [Loadv (t, position(varAux v) liste)];;
+(* val gen_exp : vname list -> tp expr -> instr list = <fun> *)
+
+

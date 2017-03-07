@@ -105,3 +105,7 @@ let rec tp_expr env = function
 	|CallE(0, name, Const(a,b)::q) -> let func = check_function name env in let varD= transform_del_vardecl env (Const(a,b)::q) in 
 										CallE((check_function_type(func, varD)), name, check_function_type_list env (Const(a,b)::q));;
 (* val tp_expr : environment -> int expr -> tp expr = <fun> *)
+
+let binop1 = BinOp (0, BCompar BCeq , VarE (0, Var (Local , "n")),
+BinOp (0, BArith BAadd , VarE (0, Var (Local , "k")),
+Const (0, IntV 1)));;
