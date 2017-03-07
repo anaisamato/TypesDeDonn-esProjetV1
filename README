@@ -20,7 +20,8 @@ sur un CallE. Il ne rentrera jamais dans ces fonctions des BinOp par exemple. Ce
 De même que d'autres fonctions ne travaillent pas avec les CallE, comme la fonction retrieve_val (l 52).
 
 Là aussi, j'ai eu beaucoup de mal à gérer les différents types, notamment les différences entre les listes de Const et de Vardecl. Il y a donc une fonction de conversion pour ces deux types.
+	
 
-
-
+Exercice 5 :
+Proposition de tests -> 
 
