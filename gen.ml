@@ -38,9 +38,8 @@ let rec gen_exp liste = function
 (* Test gen_exp and return the result, generate Even.J with the expression in bytecode *)
 let gen_prog (Prog (gvds, fdfs)) = 
   JVMProg ([], 
-           [Methdefn (Methdecl (IntT, "even", [IntT;IntT]), (* ON peut prendre jusqu'à deux arguments *)
+           [Methdefn (Methdecl (IntT, "even", (nbVarEnv env1)), (* On peut prendre jusqu'à deux arguments d'un environnement *)
                       Methinfo (10, 10), (* limit stack et limit local *)
-                      ((gen_exp ["n";"k"] (tp_expr env1 binop1))@[ReturnI (tp_of_expr(tp_expr env1 binop1))])
-                      (* here, test the binop1 in typing.ml with the env1 *)
-                    )]);;
-
+                      ((gen_exp (listOfVar env1) (tp_expr env1 expr1))@[ReturnI (tp_of_expr(tp_expr env1 expr1))]) (* test an expression of typing.ml with an environment *)
+                      (* here, test the expr1 in typing.ml with the env1 *)
+          )]);;

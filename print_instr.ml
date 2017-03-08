@@ -54,7 +54,7 @@ let pr_blogic = function
 let pr_bininst t = function 
     BArith b -> pr_barith t b
   | BCompar b -> failwith "no binary comparison instructions should be used"
-  | BLogic b -> pr_blogic b
+  | BLogic b -> pr_blogic b;;
 
 let pr_funname fn = current_classname^"/"^fn
 let pr_argtps tps = "("^(List.fold_right (^) (List.map pr_type_descriptor tps) ")")
