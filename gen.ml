@@ -34,11 +34,29 @@ let rec gen_exp liste = function
 (* val gen_exp : vname list -> tp expr -> instr list = <fun> *)
 
 
+(* Gen_expr Automitisation *)
+let couple = function
+  (a,_) -> a;;
+(* val couple 'a * 'b -> 'a = <fun> *)
+
+(* count the variables of a environment *)
+let nbVarEnv = function
+  env -> let rec aux = function 
+        [] -> []
+        |a::q -> IntT::aux q in aux env.localvar;;
+(* val nbVarEnv : environment -> tp list = <fun> *)
+
+(* create a list with the variables of an environment *)
+let listOfVar = function
+  env -> let rec aux = function 
+        [] -> []
+        |a::q -> couple(a)::aux q in aux env.localvar;;
+(* val listOfVar : environment -> vname list = <fun> *)
 
 (* Test gen_exp and return the result, generate Even.J with the expression in bytecode *)
 let gen_prog (Prog (gvds, fdfs)) = 
   JVMProg ([], 
-           [Methdefn (Methdecl (IntT, "even", (nbVarEnv env1)), (* On peut prendre jusqu'à deux arguments d'un environnement *)
+           [Methdefn (Methdecl (IntT, "even", (nbVarEnv env1)), 
                       Methinfo (10, 10), (* limit stack et limit local *)
                       ((gen_exp (listOfVar env1) (tp_expr env1 expr1))@[ReturnI (tp_of_expr(tp_expr env1 expr1))]) (* test an expression of typing.ml with an environment *)
                       (* here, test the expr1 in typing.ml with the env1 *)

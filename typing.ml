@@ -94,7 +94,6 @@ let rec check_function_type_list env = function
 (* val check_function_type_list : 'a -> 'b expr list -> tp expr list = <fun> *)
 
 
-
 (* retrieve the type of expressions *)
 let rec tp_expr env = function
 	Const(0, v) -> Const(verifConst v, v)
@@ -105,25 +104,15 @@ let rec tp_expr env = function
 										CallE((check_function_type(func, varD)), name, check_function_type_list env (Const(a,b)::q));;
 (* val tp_expr : environment -> int expr -> tp expr = <fun> *)
 
-
-(* Examples *)
-let expr1 = BinOp (0, BArith BAadd , VarE (0, Var (Local , "k")), Const (0, IntV 1));;
-let expr2 = BinOp (0, BLogic BLor , Const (0, BoolV true), Const(0, BoolV false));;
-
-
+(* Exercice 5 *)
+(* Examples of expressions *)
+let expr1 = BinOp (0, BArith BAadd , VarE (0, Var (Local , "k")), Const (0, IntV 1));; (* example of BAaad *)
+let expr2 = BinOp (0, BLogic BLor , Const (0, BoolV true), Const(0, BoolV false));;	   (* example of BLor  *)
+let expr3 = IfThenElse(0, Const(0, BoolV true), Const(0, IntV 1),Const(0, IntV 0));;
+let expr4 = CallE (0, "f", [ Const (0, IntV 3); Const (0, BoolV true )]);;
+let expr5 = BinOp (0, BCompar BCeq , VarE (0, Var (Local , "n")),
+					BinOp (0, BArith BAadd , VarE (0, Var (Local , "k")), Const (0, IntV 1)));;
+(* examples of environments *)
 let env1 = { localvar = [("n", IntT ); ("k", IntT );("t", IntT)]; globalvar = []; returntp = VoidT ; funbind = []};;
 let env2 = { localvar = [("n", IntT ); ("k", IntT )]; globalvar = []; returntp = VoidT ; funbind = [Fundecl (IntT , "f", [ Vardecl (IntT , "n"); Vardecl (BoolT , "b")])]};;
 
-
-let couple = function
-	(a,_) -> a;;
-
-let nbVarEnv = function
-	env -> let rec aux = function	
-				[] -> []
-				|a::q -> IntT::aux q in aux env.localvar;;
-
-let listOfVar = function
-	env -> let rec aux = function 
-				[] -> []
-				|a::q -> couple(a)::aux q in aux env.localvar;;

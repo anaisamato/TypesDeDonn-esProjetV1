@@ -1,27 +1,18 @@
 Doit contenir une description succincte de votre travail.
 
-Exercice 1 :
-	La fonction tp_expr va transformer une int expr en un tp expr. Elle aura pour cela besoin de nombreuses fonctions auxiliaires. J'ai essayé
-de faire le moins de fonctions auxiliaires possibles pour optimiser le code mais il y en a quand même beaucoup.
+Exercice 5 :
+	Afin de tester les fonctions, il y a dans le typing.ml des exemples d'expressions à tester avec différents environnements. Vous pouvez tester la fonction tp_expr sur ces expressions en utilisant use.ml comme vous l'avez expliqué dans le sujet.
 
-	J'ai eu beaucoup de difficultés au début à bien comprendre tous les types et à créer des fonctions qui ne généraient pas d'erreur de types. Il
-faut donc beaucoup de fonctions auxiliaires pour parfois convertir des types en d'autres ou juste récupérer un élément d'un type que l'on souhaite.
+	Afin de tester la génération du java bytecode faite par gen_exp. Vous pouvez utiliser le Wrapper. 
+	J'ai modifié gen_prog dans gen.ml afin que la fonction s'adapte à l'environnement qu'on lui fournit. Deux fonctions vont directement calculer le nombres de variables qui se trouvent dans l'environnement et les passer en paramètres de gen_prog.
+	Il suffit juste de modifier le Wrapper.java (et non le wrapper et gen_prog) à chaque fois en lui rentrant le même nombre d'arguments que de variables qui se trouvent dans l'environnement.
 
-	Les fonctions retrieve_val (l 52) et retrieve_binop (l 68) se ressemblent beaucoup par endroit, mais je n'ai pas réussi à les rassembler.
 
-	J'ai essayé d'effectuer mes tests sur tous les cas possibles, ou du moins tous les cas auxquels j'ai pensé, en plus de l'expression fournie dans le sujet :
-	- un if then else if then else -> IfThenElse(0, Const(0, BoolV true), Const(0, IntV 1), IfThenElse(0, Const(0, BoolV false), Const(0, IntV 1), Const(0, IntV 0)))
-		Je trouvais cette forme plus complexe qu'un simple if then else intéressante à tester.
-	- un comparateur logique -> BinOp (0, BLogic BLor , Const (0, BoolV true), Const(0, BoolV false))
+Problèmes et difficultés rencontrés :
+	Je n'ai pas rencontré de problèmes majeurs pour effectuer ce projet.
+	J'ai juste mis beaucoup de temps à bien comprendre les types fournis et les assimiler afin de créer mes fonctions. Comme il y a beaucoup de types j'ai souvent développé des fonctions qui renvoyaient des erreurs de types et il m'a fallu quelques temps afin de comprendre comment les convertir et les utiliser correctement.
 
-Exercice 2 :
-	Cet exercice a généré beaucoup de fonctions non exhaustives, cependant cela est normal car ceux sont des fonctions qui travaillent uniquement
-sur un CallE. Il ne rentrera jamais dans ces fonctions des BinOp par exemple. Ces fonctions sont : transform_del_vardecl (l 87), check_function_type_list (l 94).
-De même que d'autres fonctions ne travaillent pas avec les CallE, comme la fonction retrieve_val (l 52).
-
-Là aussi, j'ai eu beaucoup de mal à gérer les différents types, notamment les différences entre les listes de Const et de Vardecl. Il y a donc une fonction de conversion pour ces deux types.
 	
 
-Exercice 5 :
-Proposition de tests -> 
-
+Nota Bene : 
+	Il y a quelques fonctions non exhaustives. C'est normal. Certaines ne concernent que les CallE et d'autres que le Const, VarE, BinOp et IfThenElse. Il est donc impossible de rentrer dans les cas non traités de ces fonctions.
